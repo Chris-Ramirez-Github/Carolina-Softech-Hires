@@ -1,0 +1,72 @@
+package User;
+
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Delete
+ */
+@WebServlet("/AdminDelete")
+public class AdminDelete extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AdminDelete() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try
+		{	    
+
+		     Job user = new Job();
+		     user.setId(Integer.parseInt(request.getParameter("id")));
+		    
+		     
+		     DeleteDao job = new DeleteDao();
+		     int result = job.deleteJob(user);
+		     
+		     if(result == 0) {
+		    	 
+		    	 String message = "Job listing Successfully Deleted!";
+		    	 response.sendRedirect("Admin/AdminProfile.jsp?message="+ message); 
+		     }
+		     else {
+		    	 String errorMessage = "Sorry, no result in your query.";
+		    	 response.sendRedirect("Admin/error.jsp?errorMessage="+errorMessage); //error page 
+		     }
+		       
+		     
+		} 
+				
+				
+		catch (Throwable theException) 	    
+		{
+		     System.out.println(theException); 
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		
+		       }
+
+}
